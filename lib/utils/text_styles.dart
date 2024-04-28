@@ -16,7 +16,19 @@ class AppTextStyle {
 
   static TextStyle circularSid_300_122 = const TextStyle(
       fontFamily: 'CircularStd',
-      fontSize: 122,
+      fontSize: 100,
       fontWeight: FontWeight.w300,
+      color: Color(0xFFFFFFFF));
+
+  static TextStyle circularSid_400_16 = const TextStyle(
+      fontFamily: 'CircularStd',
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      color: Color(0xFFFFFFFF));
+
+  static TextStyle circularSid_500_24 = const TextStyle(
+      fontFamily: 'CircularStd',
+      fontSize: 24,
+      fontWeight: FontWeight.w500,
       color: Color(0xFFFFFFFF));
 }

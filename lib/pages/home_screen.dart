@@ -1,5 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:proste_bezier_curve/proste_bezier_curve.dart';
+import 'package:weather_app/utils/custom_card.dart';
 import 'package:weather_app/utils/text_styles.dart';
 
 class TabWidget {
@@ -34,10 +38,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
+        height: screenHeight,
+        width: screenWidth,
         padding: const EdgeInsets.only(top: 50),
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -76,17 +82,14 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Image.asset(
                   "assets/images/partly_cloudy.png",
-                  height: 130,
-                  width: 135,
+                  height: 100,
+                  width: 110,
                   fit: BoxFit.cover,
                 ),
                 const SizedBox(
                   width: 8,
                 ),
-                Text(
-                  "13\u00B0",
-                  style: AppTextStyle.circularSid_300_122,
-                )
+                Text("13\u00B0", style: AppTextStyle.circularSid_300_122)
               ],
             ),
             Text(
@@ -94,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
               style: AppTextStyle.circularSid_450_12.copyWith(fontSize: 18),
             ),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 55.0),
@@ -191,6 +194,97 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   );
                 },
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Expanded(
+              child: Stack(
+                children: [
+                  ClipPath(
+                    clipper: ProsteBezierCurve(
+                      position: ClipPosition.top,
+                      list: [
+                        BezierCurveSection(
+                          start: Offset(screenWidth, 60),
+                          top: Offset(screenWidth / 2, 20),
+                          end: const Offset(0, 60),
+                        ),
+                      ],
+                    ),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Color(0xFF97ABFF),
+                            Color(0xFF123597),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    child: Column(
+                      children: [
+                        CircleAvatar(
+                          radius: 45,
+                          backgroundColor: const Color(0xFF4A66BF),
+                          child: Container(
+                            margin: const EdgeInsets.all(8),
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  Color(0xFF97ABFF),
+                                  Color(0xFF123597),
+                                ],
+                              ),
+                            ),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 30.0)
+                                      .copyWith(top: 60),
+                              child: Image.asset(
+                                "assets/images/arrow_up.png",
+                                height: 20,
+                                // width: 20,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        buildCard(
+                          screenWidth: screenWidth,
+                          imageAsset: "assets/images/sun_rise.png",
+                          title1: "Sunset",
+                          content1: "5:51PM",
+                          title2: "Sunrise",
+                          content2: "7:00AM",
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        buildCard(
+                          screenWidth: screenWidth,
+                          imageAsset: "assets/images/sun.png",
+                          title1: "UV Index",
+                          content1: "1 Low",
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
