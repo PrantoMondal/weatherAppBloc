@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:proste_bezier_curve/proste_bezier_curve.dart';
 import 'package:weather_app/utils/custom_card.dart';
 import 'package:weather_app/utils/text_styles.dart';
@@ -159,58 +160,51 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(
                       height: 10,
                     ),
-                    SizedBox(
-                      height: 140,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        itemCount: 40,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color:
-                                      const Color(0xFFFFFFFF).withOpacity(.2),
-                                  width: 2),
-                              borderRadius: BorderRadius.circular(100),
-                              gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  const Color(0xFFFFFFFF)
-                                      .withOpacity(.5), //A0B0E6
-                                  const Color(0xFFFFFFFF).withOpacity(0),
-                                ],
-                              ),
+                    selectedItem!.tabTitle == "Today"
+                        ? SizedBox(
+                            height: 140,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              itemCount: successState
+                                  .weather.forecast.forecastday[0].hour.length,
+                              itemBuilder: (context, index) {
+                                return buildMiddleContainer(
+                                  successState.weather.forecast.forecastday[0]
+                                      .hour[index].time,
+                                  successState.weather.forecast.forecastday[0]
+                                      .hour[index].condition.icon,
+                                  successState.weather.forecast.forecastday[0]
+                                      .hour[index].tempC,
+                                );
+                              },
                             ),
-                            margin: const EdgeInsets.symmetric(horizontal: 8),
-                            height: 139,
-                            width: 65,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Now",
-                                  style: AppTextStyle.circularSid_450_12
-                                      .copyWith(fontSize: 16),
-                                ),
-                                Image.asset(
-                                  "assets/images/partly_cloudy.png",
-                                  height: 49,
-                                  width: 48,
-                                  fit: BoxFit.cover,
-                                ),
-                                Text(
-                                  "13\u00B0",
-                                  style: AppTextStyle.circularSid_450_12
-                                      .copyWith(fontSize: 18),
-                                ),
-                              ],
+                          )
+                        : SizedBox(
+                            height: 140,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: successState
+                                  .weather.forecast.forecastday.length,
+                              itemBuilder: (context, dayIndex) {
+                                return ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  shrinkWrap: true,
+                                  itemCount: successState.weather.forecast
+                                      .forecastday[dayIndex].hour.length,
+                                  itemBuilder: (context, hourIndex) {
+                                    var hour = successState.weather.forecast
+                                        .forecastday[dayIndex].hour[hourIndex];
+                                    return buildMiddleContainer(
+                                      hour.time,
+                                      hour.condition.icon,
+                                      hour.tempC,
+                                    );
+                                  },
+                                );
+                              },
                             ),
-                          );
-                        },
-                      ),
-                    ),
+                          ),
                     const SizedBox(
                       height: 10,
                     ),
@@ -315,6 +309,49 @@ class _HomeScreenState extends State<HomeScreen> {
               );
           }
         },
+      ),
+    );
+  }
+
+  buildMiddleContainer(String time, String iconUrl, double temperature) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+            color: const Color(0xFFFFFFFF).withOpacity(.2), width: 2),
+        borderRadius: BorderRadius.circular(100),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            const Color(0xFFFFFFFF).withOpacity(.5), //A0B0E6
+            const Color(0xFFFFFFFF).withOpacity(0),
+          ],
+        ),
+      ),
+      margin: const EdgeInsets.symmetric(horizontal: 8),
+      height: 139,
+      width: 65,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            DateFormat("hh a").format(DateTime.now()) ==
+                    DateFormat("hh a").format(DateTime.parse(time))
+                ? "Now"
+                : DateFormat.j().format(DateTime.parse(time)),
+            style: AppTextStyle.circularSid_450_12.copyWith(fontSize: 16),
+          ),
+          Image.network(
+            "http:$iconUrl",
+            height: 49,
+            width: 48,
+            fit: BoxFit.cover,
+          ),
+          Text(
+            "$temperature\u00B0",
+            style: AppTextStyle.circularSid_450_12.copyWith(fontSize: 18),
+          ),
+        ],
       ),
     );
   }

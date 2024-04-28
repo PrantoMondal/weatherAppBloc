@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:bloc/bloc.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 import 'package:weather_app/models/weather.dart';
@@ -21,8 +21,9 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     var client = http.Client();
     Weather weather;
     try {
+      Position position = await Geolocator.getCurrentPosition();
       var response = await client.get(Uri.parse(
-          "http://api.weatherapi.com/v1/forecast.json?key=$API_KEY&q=23.8041,90.4152&days=3&aqi=no&alerts=no"));
+          "http://api.weatherapi.com/v1/forecast.json?key=$API_KEY&q=${position.latitude},${position.longitude}&days=3&aqi=no&alerts=no"));
 
       weather = Weather.fromJson(json.decode(response.body));
       print("_-_-_-_-_-_-_-_-_-_-_-");
