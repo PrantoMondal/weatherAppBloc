@@ -23,7 +23,7 @@ buildCard({
         begin: Alignment.topCenter,
         end: Alignment.bottomRight,
         colors: [
-          const Color(0xFFC4CEEF),
+          const Color(0xFFFFFFFF).withOpacity(0.3),
           const Color(0xFFFFFFFF).withOpacity(0),
         ],
       ),

@@ -1,20 +1,9 @@
-import 'dart:math';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:proste_bezier_curve/proste_bezier_curve.dart';
 import 'package:weather_app/utils/custom_card.dart';
 import 'package:weather_app/utils/text_styles.dart';
 
-class TabWidget {
-  String tabTitle;
-  Widget tabWidget;
-
-  TabWidget({
-    required this.tabTitle,
-    required this.tabWidget,
-  });
-}
+import '../utils/tab_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -196,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Expanded(
