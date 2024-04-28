@@ -37,6 +37,7 @@ dependencies:
   bloc: ^8.1.4
   equatable: ^2.0.5
   google_fonts: ^5.1.0
+  http: ^1.2.0
   proste_bezier_curve: ^2.0.2
 
 

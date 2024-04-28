@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:proste_bezier_curve/proste_bezier_curve.dart';
 import 'package:weather_app/utils/custom_card.dart';
 import 'package:weather_app/utils/text_styles.dart';
+import 'package:weather_app/weather/bloc/weather_bloc.dart';
 
 import '../utils/tab_widget.dart';
 
@@ -18,9 +19,12 @@ class _HomeScreenState extends State<HomeScreen> {
     TabWidget(tabTitle: "Today", tabWidget: const Text("Today")),
     TabWidget(tabTitle: "NextDays", tabWidget: const Text("NextDays")),
   ];
+
+  final WeatherBloc weatherBloc = WeatherBloc();
   @override
   void initState() {
     selectedItem = tabWidget.first;
+    weatherBloc.add(WeatherInitialFetchEvent());
     // TODO: implement initState
     super.initState();
   }
