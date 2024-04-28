@@ -23,7 +23,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     try {
       Position position = await Geolocator.getCurrentPosition();
       var response = await client.get(Uri.parse(
-          "http://api.weatherapi.com/v1/forecast.json?key=$API_KEY&q=${position.latitude},${position.longitude}&days=3&aqi=no&alerts=no"));
+          "http://api.weatherapi.com/v1/forecast.json?key=$API_KEY&q=${position.latitude},${position.longitude}&days=4&aqi=no&alerts=no"));
 
       weather = Weather.fromJson(json.decode(response.body));
       print("_-_-_-_-_-_-_-_-_-_-_-");
