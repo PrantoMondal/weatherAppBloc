@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
+import 'package:weather_app/models/weather.dart';
 import 'package:weather_app/utils/api_key.dart';
 
 part 'weather_event.dart';
@@ -18,11 +19,15 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   FutureOr<void> weatherInitialFetchEvent(
       WeatherInitialFetchEvent event, Emitter<WeatherState> emit) async {
     var client = http.Client();
+    Weather weather;
     try {
       var response = await client.get(Uri.parse(
-          "http://api.weatherapi.com/v1/current.json?key=$API_KEY&q=London&aqi=no"));
-      print("Called");
+          "http://api.weatherapi.com/v1/forecast.json?key=$API_KEY&q=Dhaka&aqi=no"));
+
+      weather = Weather.fromJson(json.decode(response.body));
+      print("_-_-_-_-_-_-_-_-_-_-_-");
       print(response.body);
+      print(weather);
     } catch (e) {
       print(e.toString());
     }
