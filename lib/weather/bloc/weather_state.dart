@@ -4,3 +4,13 @@ part of 'weather_bloc.dart';
 abstract class WeatherState {}
 
 class WeatherInitial extends WeatherState {}
+
+abstract class WeatherActionState extends WeatherState {}
+
+class WeatherFetchSuccessfulState extends WeatherState {
+  final Weather weather;
+
+  WeatherFetchSuccessfulState({
+    required this.weather,
+  });
+}

@@ -22,12 +22,14 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     Weather weather;
     try {
       var response = await client.get(Uri.parse(
-          "http://api.weatherapi.com/v1/forecast.json?key=$API_KEY&q=Dhaka&aqi=no"));
+          "http://api.weatherapi.com/v1/forecast.json?key=$API_KEY&q=23.8041,90.4152&days=3&aqi=no&alerts=no"));
 
       weather = Weather.fromJson(json.decode(response.body));
       print("_-_-_-_-_-_-_-_-_-_-_-");
       print(response.body);
       print(weather);
+
+      emit(WeatherFetchSuccessfulState(weather: weather));
     } catch (e) {
       print(e.toString());
     }
