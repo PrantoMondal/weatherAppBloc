@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:proste_bezier_curve/proste_bezier_curve.dart';
-import 'package:weather_app/models/weather.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:weather_app/utils/custom_card.dart';
 import 'package:weather_app/utils/text_styles.dart';
+import 'package:weather_app/utils/weather_skeleton.dart';
 import 'package:weather_app/weather/bloc/weather_bloc.dart';
 
 import '../utils/tab_widget.dart';
@@ -33,6 +34,12 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
+  void _toggleSwitch(bool value) {
+    setState(() {
+      isMetric = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -50,7 +57,6 @@ class _HomeScreenState extends State<HomeScreen> {
               return Container(
                 height: screenHeight,
                 width: screenWidth,
-                padding: const EdgeInsets.only(top: 50),
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
@@ -63,12 +69,44 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 child: Column(
                   children: [
-                    Text(
-                      successState.weather.location.name,
-                      style: AppTextStyle.inter_700_32_white,
-                    ),
                     const SizedBox(
-                      height: 15,
+                      height: 40,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Spacer(),
+                        Text(
+                          successState.weather.location.name,
+                          style: AppTextStyle.inter_700_32_white,
+                        ),
+                        SizedBox(
+                          width: screenWidth / 10,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            //todo Show bottom sheet
+                          },
+                          child: const Icon(
+                            Icons.search_outlined,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        Switch(
+                          value: isMetric,
+                          onChanged: _toggleSwitch,
+                          activeTrackColor: Colors.white,
+                          activeColor: const Color(0xFF97ABFF),
+                        ),
+                        const SizedBox(
+                          width: 15,
+                        ),
+                      ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -102,7 +140,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     Text(
                       isMetric
                           ? "${successState.weather.current.condition.text} - H:${successState.weather.forecast.forecastday[0].day.maxtempC}\u00B0, L:${successState.weather.forecast.forecastday[0].day.mintempC}\u00B0"
-                          : "${successState.weather.current.condition.text} - H:${successState.weather.forecast.forecastday[0].day.maxtempF}, L:${successState.weather.forecast.forecastday[0].day.mintempF}",
+                          : "${successState.weather.current.condition.text} - H:${successState.weather.forecast.forecastday[0].day.maxtempF}F, L:${successState.weather.forecast.forecastday[0].day.mintempF}F",
+                      style: AppTextStyle.circularSid_450_12
+                          .copyWith(fontSize: 18),
+                    ),
+                    Text(
+                      isMetric
+                          ? "Humidity: ${successState.weather.current.humidity}, Feels Like: ${successState.weather.current.feelsLikeC}\u00B0"
+                          : "Humidity: ${successState.weather.current.humidity}, Feels Like: ${successState.weather.current.feelsLikeF}F",
                       style: AppTextStyle.circularSid_450_12
                           .copyWith(fontSize: 18),
                     ),
@@ -117,6 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Expanded(
                               child: GestureDetector(
                                 onTap: () {
+                                  // todo : need to remove this setState
                                   setState(() {
                                     selectedItem = tab;
                                   });
@@ -162,7 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 165,
                       child: selectedItem!.tabTitle == "Today"
                           ? SizedBox(
-                              height: 140,
+                              height: 130,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 shrinkWrap: true,
@@ -181,7 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             )
                           : SizedBox(
-                              height: 140,
+                              height: 130,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 itemCount: successState
@@ -210,9 +256,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
                     Expanded(
                       child: Stack(
                         children: [
@@ -221,9 +264,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               position: ClipPosition.top,
                               list: [
                                 BezierCurveSection(
-                                  start: Offset(screenWidth, 60),
-                                  top: Offset(screenWidth / 2, 20),
-                                  end: const Offset(0, 60),
+                                  start: Offset(screenWidth, 50),
+                                  top: Offset(screenWidth / 2, 10),
+                                  end: const Offset(0, 50),
                                 ),
                               ],
                             ),
@@ -244,74 +287,86 @@ class _HomeScreenState extends State<HomeScreen> {
                             top: 0,
                             left: 0,
                             right: 0,
-                            child: Column(
-                              children: [
-                                CircleAvatar(
-                                  radius: 45,
-                                  backgroundColor: const Color(0xFF4A66BF),
-                                  child: Container(
-                                    margin: const EdgeInsets.all(8),
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topCenter,
-                                        end: Alignment.bottomRight,
-                                        colors: [
-                                          Color(0xFF97ABFF),
-                                          Color(0xFF123597),
-                                        ],
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                              horizontal: 30.0)
-                                          .copyWith(top: 60),
-                                      child: Image.asset(
-                                        "assets/images/arrow_up.png",
-                                        height: 20,
-                                        // width: 20,
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
+                            child: CircleAvatar(
+                              radius: 45,
+                              backgroundColor: const Color(0xFF4A66BF),
+                              child: Container(
+                                margin: const EdgeInsets.all(8),
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      Color(0xFF97ABFF),
+                                      Color(0xFF123597),
+                                    ],
                                   ),
                                 ),
-                                const SizedBox(
-                                  height: 10,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                          horizontal: 30.0)
+                                      .copyWith(top: 60),
+                                  child: Image.asset(
+                                    "assets/images/arrow_up.png",
+                                    height: 20,
+                                    // width: 20,
+                                    fit: BoxFit.fill,
+                                  ),
                                 ),
-                                buildCard(
-                                  screenWidth: screenWidth,
-                                  imageAsset: "assets/images/sun_rise.png",
-                                  title1: "Sunset",
-                                  content1: successState.weather.forecast
-                                      .forecastday[0].astro.sunset,
-                                  title2: "Sunrise",
-                                  content2: successState.weather.forecast
-                                      .forecastday[0].astro.sunrise,
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                buildCard(
-                                  screenWidth: screenWidth,
-                                  imageAsset: "assets/images/sun.png",
-                                  title1: "UV Index",
-                                  content1: successState
-                                      .weather.forecast.forecastday[0].day.uv
-                                      .toString(),
-                                ),
-                              ],
+                              ),
                             ),
                           ),
+                          Positioned(
+                              bottom: 0,
+                              left: 0,
+                              right: 0,
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    buildCard(
+                                      screenWidth: screenWidth,
+                                      imageAsset: "assets/images/sun_rise.png",
+                                      title1: "Sunset",
+                                      content1: successState.weather.forecast
+                                          .forecastday[0].astro.sunset,
+                                      title2: "Sunrise",
+                                      content2: successState.weather.forecast
+                                          .forecastday[0].astro.sunrise,
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    buildCard(
+                                        screenWidth: screenWidth,
+                                        imageAsset: "assets/images/sun.png",
+                                        title1: "UV Index",
+                                        content1: successState.weather.forecast
+                                            .forecastday[0].day.uv
+                                            .toString(),
+                                        title2: "Pressure",
+                                        content2: isMetric
+                                            ? successState
+                                                .weather.current.pressureMb
+                                                .toString()
+                                            : successState
+                                                .weather.current.pressureIn
+                                                .toString()),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                ),
+                              ))
                         ],
                       ),
                     ),
                   ],
                 ),
               );
+
             default:
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return const WeatherSkeleton();
           }
         },
       ),

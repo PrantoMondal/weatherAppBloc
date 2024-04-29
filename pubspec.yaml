@@ -40,6 +40,7 @@ dependencies:
   google_fonts: ^5.1.0
   http: ^1.2.0
   proste_bezier_curve: ^2.0.2
+  shimmer: ^3.0.0
 
 
 

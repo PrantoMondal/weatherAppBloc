@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:weather_app/utils/weather_skeleton.dart';
 import 'package:weather_app/weather/bloc/weather_bloc.dart';
 import 'package:weather_app/weather/home_screen.dart';
 
@@ -27,14 +29,10 @@ class MyApp extends StatelessWidget {
             return BlocProvider<WeatherBloc>(
               create: (context) =>
                   WeatherBloc()..add(WeatherInitialFetchEvent()),
-              child: HomeScreen(),
+              child: const HomeScreen(),
             );
           } else {
-            return const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
+            return const WeatherSkeleton();
           }
         },
       ),

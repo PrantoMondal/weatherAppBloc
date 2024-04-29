@@ -30,6 +30,9 @@ class Current {
   double pressureMb;
   double pressureIn;
   double uv;
+  dynamic humidity;
+  double feelsLikeC;
+  double feelsLikeF;
 
   Current({
     required this.lastUpdatedEpoch,
@@ -41,6 +44,9 @@ class Current {
     required this.pressureMb,
     required this.pressureIn,
     required this.uv,
+    required this.humidity,
+    required this.feelsLikeC,
+    required this.feelsLikeF,
   });
 
   factory Current.fromJson(Map<String, dynamic> json) => Current(
@@ -53,6 +59,9 @@ class Current {
         pressureMb: json["pressure_mb"],
         pressureIn: json["pressure_in"]?.toDouble(),
         uv: json["uv"],
+        humidity: json["humidity"],
+        feelsLikeC: json["feelslike_c"],
+        feelsLikeF: json["feelslike_f"],
       );
 }
 
