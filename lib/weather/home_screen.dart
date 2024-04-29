@@ -8,6 +8,7 @@ import 'package:weather_app/utils/text_styles.dart';
 import 'package:weather_app/utils/weather_skeleton.dart';
 import 'package:weather_app/weather/bloc/weather_bloc.dart';
 
+import '../search/search_screen.dart';
 import '../utils/tab_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -86,7 +87,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            //todo Show bottom sheet
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SearchScreen(),
+                                ));
                           },
                           child: const Icon(
                             Icons.search_outlined,
