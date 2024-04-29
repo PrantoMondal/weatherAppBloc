@@ -264,9 +264,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               position: ClipPosition.top,
                               list: [
                                 BezierCurveSection(
-                                  start: Offset(screenWidth, 50),
-                                  top: Offset(screenWidth / 2, 10),
-                                  end: const Offset(0, 50),
+                                  start: Offset(screenWidth, 60),
+                                  top: Offset(screenWidth / 2, 25),
+                                  end: const Offset(0, 60),
                                 ),
                               ],
                             ),
