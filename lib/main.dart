@@ -15,26 +15,29 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: FutureBuilder(
-        future: _determinePosition(),
-        builder: (context, state) {
-          if (state.hasData) {
-            return BlocProvider<WeatherBloc>(
-              create: (context) =>
-                  WeatherBloc()..add(WeatherInitialFetchEvent()),
-              child: const HomeScreen(),
-            );
-          } else {
-            return const WeatherSkeleton();
-          }
-        },
+    return BlocProvider(
+      create: (context) => WeatherBloc(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: FutureBuilder(
+          future: _determinePosition(),
+          builder: (context, state) {
+            if (state.hasData) {
+              return BlocProvider<WeatherBloc>(
+                create: (context) =>
+                    WeatherBloc()..add(WeatherInitialFetchEvent()),
+                child: const HomeScreen(),
+              );
+            } else {
+              return const WeatherSkeleton();
+            }
+          },
+        ),
       ),
     );
   }

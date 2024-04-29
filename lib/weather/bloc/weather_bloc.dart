@@ -14,6 +14,8 @@ part 'weather_state.dart';
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   WeatherBloc() : super(WeatherInitial()) {
     on<WeatherInitialFetchEvent>(weatherInitialFetchEvent);
+    on<WeatherSearchCityEvent>(
+        (event, emit) => searchWeatherByCity(event, emit));
   }
 
   FutureOr<void> weatherInitialFetchEvent(
@@ -30,6 +32,24 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       print(response.body);
       print(weather);
 
+      emit(WeatherFetchSuccessfulState(weather: weather));
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> searchWeatherByCity(
+      WeatherSearchCityEvent event, Emitter<WeatherState> emit) async {
+    var client = http.Client();
+    Weather weather;
+    try {
+      var response = await client.get(Uri.parse(
+          "http://api.weatherapi.com/v1/forecast.json?key=$API_KEY&q=${event.city}&days=4&aqi=no&alerts=no"));
+
+      weather = Weather.fromJson(json.decode(response.body));
+      print("_-_-_-_-_-_-_-_-_-_-_-");
+      print(response.body);
+      print(weather);
       emit(WeatherFetchSuccessfulState(weather: weather));
     } catch (e) {
       print(e.toString());

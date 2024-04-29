@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/utils/text_styles.dart';
+
+import '../models/weather.dart';
+import '../weather/bloc/weather_bloc.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -70,9 +74,26 @@ class _SearchScreenState extends State<SearchScreen> {
               ElevatedButton(
                 onPressed: () {
                   String searchText = _searchController.text;
+                  BlocProvider.of<WeatherBloc>(context)
+                      .add(WeatherSearchCityEvent(searchText));
+                  Navigator.pop(context);
                 },
                 child: const Text('Search'),
               ),
+              const SizedBox(
+                height: 10,
+              ),
+              // BlocBuilder<WeatherBloc, WeatherState>(
+              //   builder: (context, state) {
+              //     if (state is WeatherFetchSuccessfulState) {
+              //       Weather weather = state.weather;
+              //
+              //       return Text('Weather: $weather');
+              //     } else {
+              //       return Text('No weather data available');
+              //     }
+              //   },
+              // ),
             ],
           ),
         ),
