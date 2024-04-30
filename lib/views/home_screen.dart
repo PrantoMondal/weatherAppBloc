@@ -6,9 +6,9 @@ import 'package:weather_app/utils/custom_card.dart';
 import 'package:weather_app/utils/tab_widget.dart';
 import 'package:weather_app/utils/text_styles.dart';
 import 'package:weather_app/utils/weather_skeleton.dart';
+import 'package:weather_app/views/search_screen.dart';
 
-import 'search_screen.dart';
-import 'bloc/weather_bloc.dart';
+import '../controller/weather_bloc/weather_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

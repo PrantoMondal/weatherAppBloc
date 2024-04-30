@@ -1,16 +1,46 @@
-# weather_app
+# Weather App
 
-A new Flutter project.
+Welcome to the Weather App! This app allows you to get the current weather and forecast data for your location or any city worldwide.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+### 1. Get Today's Weather
+- View the current weather conditions including temperature, humidity, wind speed, etc.
+- Automatically fetches weather data based on the user's location on first-time use.
 
-A few resources to get you started if this is your first Flutter project:
+### 2. View Forecast Data
+- Access the weather forecast for the next few days, including temperature highs and lows, weather conditions, etc.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### 3. Search by City Name
+- Search for weather information for any city worldwide by entering the city name.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Screenshots
+
+![1](/assets/images/001.jpg?raw=true "Location permission")
+
+## Technologies Used
+- Dart
+- Flutter
+- Bloc Pattern for state management
+- Geolocator package for fetching user's location
+- HTTP package for making API requests
+- WeatherAPI for weather data
+
+## How to Use
+1. Clone the repository to your local machine.
+2. Run `flutter pub get` to install dependencies.
+3. Run the app on an emulator or physical device using `flutter run`.
+
+## Future Improvements
+- Add additional weather data such as precipitation, UV index, etc.
+- Implement user authentication for saving favorite locations.
+- Improve UI/UX for a better user experience.
+
+## Credits
+- Weather data provided by [WeatherAPI](https://www.weatherapi.com/)
+- Icons used in the app from [Flaticon](https://www.flaticon.com/)
+
+## License
+This project is licensed under the [MIT License](LICENSE).
+
+

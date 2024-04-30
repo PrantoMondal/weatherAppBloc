@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/business_logic/weather/home_screen.dart';
+import 'package:weather_app/views/home_screen.dart';
 import 'package:weather_app/utils/text_styles.dart';
 
-import 'bloc/weather_bloc.dart';
+import '../controller/weather_bloc/weather_bloc.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});

@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:weather_app/utils/weather_skeleton.dart';
 
-import 'business_logic/weather/bloc/weather_bloc.dart';
-import 'business_logic/weather/home_screen.dart';
+import 'controller/weather_bloc/weather_bloc.dart';
+import 'views/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
