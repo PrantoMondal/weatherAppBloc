@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/business_logic/weather/home_screen.dart';
 import 'package:weather_app/utils/text_styles.dart';
 
-import '../models/weather.dart';
-import '../weather/bloc/weather_bloc.dart';
+import 'bloc/weather_bloc.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -61,11 +61,16 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                 ],
               ),
+              const SizedBox(
+                height: 20,
+              ),
               TextField(
                 controller: _searchController,
+                style: TextStyle(color: Colors.white),
                 decoration: const InputDecoration(
                   labelText: 'Search',
                   hintText: 'Search by city name...',
+                  hintStyle: TextStyle(color: Colors.white54),
                   prefixIcon: Icon(Icons.search),
                   border: OutlineInputBorder(),
                 ),
@@ -74,8 +79,10 @@ class _SearchScreenState extends State<SearchScreen> {
               ElevatedButton(
                 onPressed: () {
                   String searchText = _searchController.text;
-                  BlocProvider.of<WeatherBloc>(context)
+                  context
+                      .read<WeatherBloc>()
                       .add(WeatherSearchCityEvent(searchText));
+
                   Navigator.pop(context);
                 },
                 child: const Text('Search'),
@@ -83,17 +90,6 @@ class _SearchScreenState extends State<SearchScreen> {
               const SizedBox(
                 height: 10,
               ),
-              // BlocBuilder<WeatherBloc, WeatherState>(
-              //   builder: (context, state) {
-              //     if (state is WeatherFetchSuccessfulState) {
-              //       Weather weather = state.weather;
-              //
-              //       return Text('Weather: $weather');
-              //     } else {
-              //       return Text('No weather data available');
-              //     }
-              //   },
-              // ),
             ],
           ),
         ),

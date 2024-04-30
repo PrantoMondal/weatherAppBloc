@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:weather_app/utils/weather_skeleton.dart';
-import 'package:weather_app/weather/bloc/weather_bloc.dart';
-import 'package:weather_app/weather/home_screen.dart';
+
+import 'business_logic/weather/bloc/weather_bloc.dart';
+import 'business_logic/weather/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,8 +15,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => WeatherBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<WeatherBloc>(
+          create: (context) => WeatherBloc()..add(WeatherInitialFetchEvent()),
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
@@ -28,11 +32,7 @@ class MyApp extends StatelessWidget {
           future: _determinePosition(),
           builder: (context, state) {
             if (state.hasData) {
-              return BlocProvider<WeatherBloc>(
-                create: (context) =>
-                    WeatherBloc()..add(WeatherInitialFetchEvent()),
-                child: const HomeScreen(),
-              );
+              return const HomeScreen();
             } else {
               return const WeatherSkeleton();
             }

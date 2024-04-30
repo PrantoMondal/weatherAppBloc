@@ -14,3 +14,10 @@ class WeatherFetchSuccessfulState extends WeatherState {
     required this.weather,
   });
 }
+
+class WeatherSearchSuccessfulState extends WeatherState {
+  final Weather weather;
+  WeatherSearchSuccessfulState({
+    required this.weather,
+  });
+}
