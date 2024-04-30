@@ -31,16 +31,9 @@ Welcome to the Weather App! This app allows you to get the current weather and f
 2. Run `flutter pub get` to install dependencies.
 3. Run the app on an emulator or physical device using `flutter run`.
 
-## Future Improvements
-- Add additional weather data such as precipitation, UV index, etc.
-- Implement user authentication for saving favorite locations.
-- Improve UI/UX for a better user experience.
-
 ## Credits
 - Weather data provided by [WeatherAPI](https://www.weatherapi.com/)
-- Icons used in the app from [Flaticon](https://www.flaticon.com/)
+- Design provided by [Steadfast IT](https://steadfast.com.bd/)
 
-## License
-This project is licensed under the [MIT License](LICENSE).
 
 
