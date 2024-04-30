@@ -9,7 +9,7 @@ Welcome to the Weather App! This app allows you to get the current weather and f
 - Automatically fetches weather data based on the user's location on first-time use.
 
 ### 2. View Forecast Data
-- Access the weather forecast for the next few days, including temperature highs and lows, weather conditions, etc.
+- Access the weather forecast for the next 3 days, including temperature highs and lows, weather conditions, etc.
 
 ### 3. Search by City Name
 - Search for weather information for any city worldwide by entering the city name.
